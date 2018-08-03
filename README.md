@@ -1,2 +1,6 @@
 # js-challenge
-A repo of JavaScript challenges and my solutions.
+
+What better way to keep your skills sharp than by doing code challenges. It's not time consuming and forces you to think!! Inside each directory is a `README.md` that contains the problem and a `solution.js` that contains my attempted answer. Checkout the [challenge me](https://tokafew420.github.io/js-challenge/) page to try it yourself and see if you can beat my runtime.
+
+## Challenges
+

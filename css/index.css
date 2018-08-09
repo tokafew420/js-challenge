@@ -1,52 +1,15 @@
-html {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: #f8f9fa;
-}
-
-p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0 0 25px;
-}
-
-a {
-    color: #007bff;
-}
-
-.navbar-dark {
-    background-color: #000000;
-}
-
-.content {
-    margin-top: 56px;
-    margin-bottom: 60px;
-}
-
-#challenges li {
+#challenges-section li {
     background-color: rgba(0, 0, 0, .2);
     border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 4px;
     padding: 8px;
+    margin-bottom: 4px;
 }
 
-#challenges li .title {
+#challenges-section li:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+#challenges-section li .title {
     font-weight: bold;
-}
-
-.footer {
-    color: #808080;
-    width: 100%;
-    height: 160px;
-    line-height: 60px;
-    background-color: #000000;
-    padding: 24px;
 }

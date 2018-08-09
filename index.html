@@ -7,21 +7,22 @@
   <meta name="description" content="js-challenge me repo. Test you skills.">
   <meta name="author" content="tokafew420">
 
-  <title>JS challenge me</title>
+  <title>JS challenge</title>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
     crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
-  <link href="./css/index.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cabin:700">
+  <link rel="stylesheet" type="text/css" href="./css/base.css">
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
 
 <body>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#home">JS Challenge</a>
+      <a class="navbar-brand js-scroll-trigger" href="#home-section">JS Challenge</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,18 +30,15 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link js-scroll-trigger" href="#home">Home
+            <a class="nav-link js-scroll-trigger" href="#home-section">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/tokafew420/js-challenge">Repo</a>
+            <a class="nav-link js-scroll-trigger" href="#challenge-me-section">Challenge Me</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#challenge-me">Challenge Me</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#challenges">Challenges</a>
+            <a class="nav-link js-scroll-trigger" href="#challenges-section">Challenges</a>
           </li>
         </ul>
       </div>
@@ -48,7 +46,7 @@
   </nav>
 
   <div class="content">
-    <section id="home">
+    <section id="home-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -56,12 +54,13 @@
             <p class="lead">What better way to keep your skills sharp than by doing code challenges. It's not time consuming and forces you
               to think!!</p>
             <p>Each challenge contains a problem description and some example input/output. Checkout the
-              <a href="https://github.com/tokafew420/js-challenge">Repo</a> to see my attempted solution to the problem.</p>
+              <a href="https://github.com/tokafew420/js-challenge">Repo</a> to see my attempted solution to the problems.</p>
           </div>
         </div>
       </div>
     </section>
-    <section id="challenge-me">
+
+    <section id="challenge-me-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -74,7 +73,8 @@
         </div>
       </div>
     </section>
-    <section id="challenges">
+
+    <section id="challenges-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -95,6 +95,7 @@
       </div>
     </section>
   </div>
+
   <footer class="footer">
     <div class="container">
       <div class="container text-center">
@@ -115,7 +116,8 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
   <!-- Custom scripts for this template -->
-  <script src="js/index.js"></script>
+  <script src="./js/base.js"></script>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>

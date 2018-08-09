@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="js-challenge me repo. Test you skills.">
+    <meta name="author" content="tokafew420">
+
+    <title>JS challenge - Wildcard Matching</title>
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/theme/neat.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cabin:700">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/challenge.css">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">JS Challenge</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#description-section">Description </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#examples-section">Examples </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#code-section">Code </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#test-section">Test</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#result-section">Result </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <section id="title-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="mt-5">
+                            <a href="https://leetcode.com/problems/wildcard-matching/description/">Wildcard Matching</a>
+                        </h1>
+                        <div>
+                            <p>From
+                                <a href="https://leetcode.com">leetcode.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="description-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="label" data-toggle="collapse" href="#description" role="button" aria-expanded="false" aria-controls="description">Description</h4>
+                        <div class="collapse" id="description">
+                            <div class="card card-body">
+                                <p>Given an input string (
+                                    <code>s</code>) and a pattern (
+                                    <code>p</code>), implement wildcard pattern matching with support for
+                                    <code>'?'</code> and
+                                    <code>'*'</code>.</p>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>'?' Matches any single character.
+'*' Matches any sequence of characters (including the empty sequence).</pre>
+                                </div>
+                                <p>The matching should cover the
+                                    <strong>entire</strong> input string (not partial).</p>
+                                <p>
+                                    <strong>Note:</strong>
+                                    <ul>
+                                        <li>
+                                            <code>s</code> could be empty and contains only lowercase letters
+                                            <code>a-z.</code>
+                                        </li>
+                                        <li>
+                                            <code>p</code> could be empty and contains only lowercase letters
+                                            <code>a-z</code>, and characters like
+                                            <code>?</code> or
+                                            <code>*</code>.</li>
+                                    </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="label" data-toggle="collapse" href="#examples" role="button" aria-expanded="false" aria-controls="sample">Examples</h4>
+                        <div class="collapse" id="examples">
+                            <div class="card card-body">
+                                <strong>Example 1:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>
+<strong>Input:</strong>
+s = "aa"
+p = "a"
+<strong>Output:</strong> false
+<strong>Explanation:</strong> "a" does not match the entire string "aa".</pre>
+                                </div>
+                                <strong>Example 2:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>
+<strong>Input:</strong>
+s = "aa"
+p = "*"
+<strong>Output:</strong> true
+<strong>Explanation:</strong> '*' matches any sequence.</pre>
+                                </div>
+                                <strong>Example 3:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>
+<strong>Input:</strong>
+s = "cb"
+p = "?a"
+<strong>Output:</strong> false
+<strong>Explanation:</strong> '?' matches 'c', but the second letter is 'a', which does not match 'b'.</pre>
+                                </div>
+                                <strong>Example 4:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>
+<strong>Input:</strong>
+s = "adceb"
+p = "*a*b"
+<strong>Output:</strong> true
+<strong>Explanation:</strong> The first '*' matches the empty sequence, while the second '*' matches the substring "dce".</pre>
+                                </div>
+                                <strong>Example 5:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    <pre>
+<strong>Input:</strong>
+s = "acdcb"
+p = "a*c?b"
+<strong>Output:</strong> false</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="code-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="label">Code</h4>
+                        <a id="reset" href="#">Reset</a>
+                        <textarea id="editor"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="test-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="label mt-3">Test</h4>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">String</span>
+                            </div>
+                            <input type="text" id="string" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"
+                                value="acdcb">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Pattern</span>
+                            </div>
+                            <input type="text" id="pattern" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"
+                                value="a*c?b">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 actions">
+                        <button type="button" id="run-once" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                            data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
+                        <!-- <button type="button" id="test" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                            data-trigger="hover" data-content="Run and compare your code">Test Solution</button> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="result-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="label mt-3">Result</h4>
+                        <div class="alert alert-secondary" role="alert">
+                            <pre>
+<strong>Input:</strong> s = "<span id="inputString"></span>" p = "<span id="inputPattern"></span>"
+<strong>Expected:</strong> <span id="expectedOutput"></span>
+<strong>Output:  </strong> <span id="actualOutput" ></span>
+<strong>Base Time:</strong> <span id="baseTime" ></span>
+<strong>Your Time:</strong> <span id="yourTime" ></span>
+<strong>Comparison:</strong> <span id="comparison" ></span></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="container text-center">
+                <p>View
+                    <a href="https://github.com/tokafew420/js-challenge">Repository</a>
+                </p>
+                <p>
+                    <a href="../index.html">Home</a>
+                </p>
+                <p>Copyright &copy; Tokafew420
+                    <span id="year">2018</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="progress-wrapper">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/javascript/javascript.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/challenge.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>

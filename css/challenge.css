@@ -1,0 +1,36 @@
+.label::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .3em;
+    vertical-align: middle;
+    content: "";
+    border-right: .3em solid transparent;
+    border-left: .3em solid transparent;
+}
+
+.label[aria-expanded="false"]::after {
+    border-top: .3em solid;
+}
+
+.label[aria-expanded="true"]::after {
+    border-bottom: .3em solid;
+}
+
+code {
+    background-color: #f7f7f9;
+    border-radius: .25rem;
+}
+
+#description,
+#sample {
+    margin-bottom: .5em;
+}
+
+.CodeMirror {
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+iframe {
+    display: none;
+}

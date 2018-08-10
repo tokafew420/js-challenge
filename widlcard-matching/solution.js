@@ -44,7 +44,7 @@ function isMatch(s, p) {
 
                         // Reset the string position to the last wildcard plus one
                         // We can't skip because we might miss recurring patterns
-                        sIdx = wsIdx++;
+                        sIdx = ++wsIdx;
 
                         // Reset the pattern to the last wildcard and start matching again from there.
                         // Note: +1 is done below.
@@ -63,7 +63,7 @@ function isMatch(s, p) {
         if (sIdx < sLen && wild && wIdx !== pLen - 1) {
             // Reset the string position to the last wildcard plus one
             // We can't skip because we might miss recurring patterns
-            sIdx = wsIdx++;
+            sIdx = ++wsIdx;
             // Reset the pattern to the last wildcard and start matching again from there.
             pIdx = wIdx + 1;
         } else {

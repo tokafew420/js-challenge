@@ -59,9 +59,11 @@
         },
         hide: function() {
             $progress.hide();
+            app.progress.update(0);
             app.backdrop.hide();
         },
         update: function(precent) {
+            precent = ((precent || 0) * 100).toFixed(2);
             $progressbar.width(precent + '%').attr('aria-valuenow', precent).text(precent + '%');
         }
     };

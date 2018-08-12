@@ -204,10 +204,19 @@ p = "a*c?b"
                         </div>
                     </div>
                     <div class="col-lg-12 actions">
-                        <button type="button" id="run-once" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover" data-placement="bottom"
-                            data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
-                        <!-- <button type="button" id="test" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
-                            data-trigger="hover" data-content="Run and compare your code">Test Solution</button> -->
+                        <button type="button" id="run-once" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                            data-placement="bottom" data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
+                        <button type="button" id="test" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                            data-placement="bottom" data-trigger="hover" data-content="Run and compare your code">Test Solution</button>
+                        <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <div class="input-group-text" id="btnGroupAddon"><strong>Compare Against: </strong></div> 
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="compare-opt-regex" autocomplete="off" checked> Regex
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="compare-opt-top" autocomplete="off"> My solution
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,18 +227,25 @@ p = "a*c?b"
                 <div class="row">
                     <div class="col-lg-12">
                         <h4 class="label mt-3">Result</h4>
-                        <div class="alert alert-secondary" role="alert">
-                            <pre>
-<strong>Input:</strong> s = "<span id="inputString"></span>" p = "<span id="inputPattern"></span>"
-<strong>Expected:</strong> <span id="expectedOutput"></span>
-<strong>Output:  </strong> <span id="actualOutput" ></span>
-<strong>Base Time:</strong> <span id="baseTime" ></span>
-<strong>Your Time:</strong> <span id="yourTime" ></span>
-<strong>Comparison:</strong> <span id="comparison" ></span></pre>
+                        <div id="summary" class="alert alert-secondary" role="alert" style="display: none;">
+                        </div>
+                        <div id="output" class="alert alert-secondary" role="alert">
                         </div>
                     </div>
                 </div>
             </div>
+            <pre id="output-template" style="display: none;">
+<strong>Input:</strong> s = "<span id="input-string"></span>" p = "<span id="input-pattern"></span>"
+<strong>Expected: </strong><span id="expected-output"></span> <strong>Output: </strong><span id="actual-output" ></span>
+<strong>Base Time => Max: </strong><span id="base-time-max" ></span> Avg: </strong><span id="base-time-avg" ></span> Min: </strong><span id="base-time-min" ></span>
+<strong>Your Time => Max: </strong><span id="your-time-max" ></span> Avg: </strong><span id="your-time-avg" ></span> Min: </strong><span id="your-time-min" ></span>
+<strong>Comparison (Avg): </strong><span id="comparison" ></span></pre>
+            <pre id="summary-template" style="display: none;">
+<strong>Test Cases: </strong><span id="test-cases"></span>
+<strong>Passed: </strong><span id="passed"></span><strong> Failed: </strong><span id="failed" ></span>
+<strong>Base Time Averages => Max: </strong><span id="base-time-max" ></span> Avg: </strong><span id="base-time-avg" ></span> Min: </strong><span id="base-time-min" ></span>
+<strong>Your Time Averages => Max: </strong><span id="your-time-max" ></span> Avg: </strong><span id="your-time-avg" ></span> Min: </strong><span id="your-time-min" ></span>
+<strong>Comparison (Avg): </strong><span id="comparison" ></span></pre>
         </section>
     </div>
 
@@ -266,6 +282,7 @@ p = "a*c?b"
     <script src="../js/base.js"></script>
     <script src="../js/challenge.js"></script>
     <script src="./index.js"></script>
+    <script src="https://rawgit.com/tokafew420/js-challenge/master/widlcard-matching/solution.js"></script>
 </body>
 
 </html>

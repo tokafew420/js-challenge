@@ -14,16 +14,50 @@
         return decodeURIComponent(escape(window.atob(str)));
     };
 
+    app.getStats = function (runtimes) {
+        if (!Array.isArray(runtimes)) {
+            runtimes = [];
+        }
+        var len = runtimes.length;
+        var max = runtimes[0];
+        var min = runtimes[0];
+        var sum = runtimes[0];
+
+        for (var i = 1; i < len; i++) {
+            if (runtimes[i] > max) {
+                max = runtimes[i];
+            }
+            if (runtimes[i] < min) {
+                min = runtimes[i];
+            }
+            sum = sum + runtimes[i];
+        }
+
+        return {
+            max: max,
+            min: min,
+            sum: sum,
+            avg: sum / len
+        };
+    };
+
     // This will never get called, it's just nicer to write and call `toString()` on.
+    // fn is a place holder for the function name.
     function handler(evt) {
-        var res = {};
+        var res = {
+            answer: null,
+            runtimes: []
+        };
+        var paramNames, args, start, i, iterations;
+
         try {
             if (typeof fn !== 'function') {
                 throw new Error('function [fn] is not defined.');
             }
 
+            // Get the function parameter names
             // https://stackoverflow.com/a/31194949
-            var paramNames = (typeof fn === 'function' ? Function.toString.call(fn) : fn + '')
+            paramNames = (typeof fn === 'function' ? Function.toString.call(fn) : fn + '')
                 .replace(/[/][/].*$/mg, '') // strip single-line comments
                 .replace(/\s+/g, '') // strip white space
                 .replace(/[/][*][^/*]*[*][/]/g, '') // strip multi-line comments  
@@ -31,12 +65,22 @@
                 .replace(/=[^,]+/g, '') // strip any ES6 defaults  
                 .split(',').filter(Boolean); // split & filter [""]
 
-            var args = paramNames.map(function (p) {
+            // Create arguments array
+            args = paramNames.map(function (p) {
                 return evt.data[p];
             });
-            res.start = performance.now();
+            iterations = evt.data.iterations;
+
+            start = performance.now();
+            // Save the first result
             res.answer = fn.apply(null, args);
-            res.end = performance.now();
+            res.runtimes.push(performance.now() - start);
+
+            for (i = 1; i < iterations; i++) {
+                start = performance.now();
+                fn.apply(null, args);
+                res.runtimes.push(performance.now() - start);
+            }
 
             evt.source.postMessage(res, evt.origin);
         } catch (err) {
@@ -48,6 +92,7 @@
     // Keep a reference to the current iframe so we can remove it, once the eval has finished.
     var $currFrame = null;
     var timer;
+    var _callback;
 
     // https://github.com/AshHeskes/eval-extension/blob/master/client/js/app.js
     app.compile = function (fnName, code) {
@@ -65,7 +110,20 @@
             $frame.attr('src', dataURI);
             $frame.appendTo('body');
 
-            $frame.invoke = app.debounce(function (data, timeout) {
+            $frame.invoke = app.debounce(function (data, iterations, timeout, callback) {
+                if(typeof iterations === 'function') {
+                    callback = iterations;
+                    iterations = 1;
+                    timeout = null;
+                } else if (typeof timeout === 'function') {
+                    callback = timeout;
+                    timeout = null;
+                }
+                if (typeof iterations !== 'number') {
+                    iterations = 1;
+                }
+                _callback = callback || function() {};
+
                 setTimeout(function () {
                     $frame[0].contentWindow.postMessage(data, '*');
                     timer = setTimeout(function () {
@@ -89,8 +147,6 @@
         }
     };
 
-    app.onResult = function () {};
-
     function onResult(evt) {
         if ($currFrame) {
             $currFrame.remove();
@@ -99,8 +155,11 @@
         }
 
         var res = evt.data || {};
-        if (typeof app.onResult === 'function') {
-            app.onResult(res.err, res);
+
+        res.stats = app.getStats(res.runtimes);
+
+        if (typeof _callback === 'function') {
+            _callback(res.err, res);
         } else {
             console.log(res);
         }

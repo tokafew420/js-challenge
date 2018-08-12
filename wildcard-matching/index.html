@@ -203,13 +203,17 @@ p = "a*c?b"
                                 value="a*c?b">
                         </div>
                     </div>
-                    <div class="col-lg-12 actions">
-                        <button type="button" id="run-once" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                    <div class="col-lg-6 actions">
+                        <button type="button" id="run-once" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
                             data-placement="bottom" data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
-                        <button type="button" id="test" class="btn btn-outline-dark" role="button" data-container="#test-section .actions" data-toggle="popover"
+                        <button type="button" id="test" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
                             data-placement="bottom" data-trigger="hover" data-content="Run and compare your code">Test Solution</button>
-                        <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <div class="input-group-text" id="btnGroupAddon"><strong>Compare Against: </strong></div> 
+                    </div>
+                    <div class="col-lg-6 actions">
+                        <div class="btn-group btn-group-toggle float-lg-right mb-3" data-toggle="buttons">
+                            <div class="input-group-text" id="btnGroupAddon">
+                                <strong>Compare Against: </strong>
+                            </div>
                             <label class="btn btn-secondary active">
                                 <input type="radio" name="options" id="compare-opt-regex" autocomplete="off" checked> Regex
                             </label>

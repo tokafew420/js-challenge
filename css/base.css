@@ -54,3 +54,7 @@ a {
     background-color: #000000;
     padding: 24px;
 }
+
+.hidden {
+    display: none;
+}

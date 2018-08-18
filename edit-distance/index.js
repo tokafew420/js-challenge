@@ -1,8 +1,7 @@
 (function (window, $) {
-    "use strict";
 
-    if (localStorage.getItem('js-challenge-wildcard-matching')) {
-        app.editor.setValue(localStorage.getItem('js-challenge-wildcard-matching'));
+    if (localStorage.getItem('js-challenge-edit-distance')) {
+        app.editor.setValue(localStorage.getItem('js-challenge-edit-distance'));
     } else {
         reset();
     }
@@ -12,13 +11,12 @@
 
         app.editor.setValue(
             `/**
- * @param {string} s
- * @param {string} p
- * @return {boolean}
- */
-function isMatch(s, p) {
-    var i = new RegExp('^' + p.replace(/\\?/g, '.').replace(/\\*/g, '.*') + '$');
-    return i.test(s);
+* @param {string} word1
+* @param {string} word2
+* @return {number}
+*/
+function minDistance(word1, word2) {
+    
 };`
         );
     }
@@ -29,14 +27,13 @@ function isMatch(s, p) {
         var code = app.editor.getValue();
 
         if (code) {
-            localStorage.setItem('js-challenge-wildcard-matching', code);
-            app.compile('isMatch', code);
+            localStorage.setItem('js-challenge-edit-distance', code);
+            app.compile('minDistance', code);
         }
     });
 
-    function baseSolution(s, p) {
-        var i = new RegExp("^" + p.replace(/\?/g, '.').replace(/\*/g, '.*') + "$");
-        return i.test(s);
+    function baseSolution(word1, word2) {
+        return 3;
     }
 
     var $input1 = $('#input-1');
@@ -48,17 +45,17 @@ function isMatch(s, p) {
     var runs, ran;
     var summary;
 
-    function runTest(input1, input2, callback) {
+    function runTest(word1, word2, callback) {
         var input = {
-            s: input1,
-            p: input2,
+            word1: word1,
+            word2: word2,
             iterations: 100
         };
         summary.testCases++;
 
         var isCompareToBase = $('#compare-opt-base').is(':checked');
-        var baseFnName = isCompareToBase ? 'baseSolution' : 'isMatch';
-        var baseFn = isCompareToBase ? baseSolution : isMatch;
+        var baseFnName = isCompareToBase ? 'baseSolution' : 'minDistance';
+        var baseFn = isCompareToBase ? baseSolution : minDistance;
 
         app.compile(baseFnName, baseFn.toString()).invoke(input, function (err, baseRes) {
             app.progress.update(++ran / runs);
@@ -68,7 +65,7 @@ function isMatch(s, p) {
 
             summary.baseRuntimes.push(baseRes.stats.avg);
 
-            var code = app.compile('isMatch', app.editor.getValue());
+            var code = app.compile('minDistance', app.editor.getValue());
 
             if (code) {
                 code.invoke(input, function (err, res) {
@@ -93,8 +90,8 @@ function isMatch(s, p) {
                     var $yourTimeMin = $('#your-time-min', $clone);
                     var $comparison = $('#comparison', $clone);
 
-                    $trialInput1.text(input.s);
-                    $trialInput2.text(input.p);
+                    $trialInput1.text(input.word1);
+                    $trialInput2.text(input.word2);
 
                     $trialExpected.text(baseRes.answer);
                     $trialActual.text(res.answer);
@@ -249,137 +246,7 @@ function isMatch(s, p) {
     });
 
     var testCases = [
-        ['aa', 'a'],
-        ['aa', '*'],
-        ['cb', '?a'],
-        ['adceb', '*a*b'],
-        ['acdcb', 'a*c?b'],
-        ['', ''],
-        ['', 'a'],
-        ['', '?'],
-        ['', '*'],
-        ['a', ''],
-        ['a', 'a'],
-        ['a', 'b'],
-        ['a', '?'],
-        ['a', '*'],
-        ['a', 'aa'],
-        ['a', 'ab'],
-        ['a', 'ba'],
-        ['a', 'a?'],
-        ['a', '?a'],
-        ['a', '?b'],
-        ['a', 'b?'],
-        ['a', 'a*'],
-        ['a', '*a'],
-        ['a', 'b*'],
-        ['a', '*b'],
-        ['a', '??'],
-        ['a', '*?'],
-        ['a', '?*'],
-        ['a', '**'],
-        ['aa', ''],
-        ['aa', 'b'],
-        ['aa', '?'],
-        ['aa', 'aa'],
-        ['aa', 'aaa'],
-        ['aa', 'ab'],
-        ['aa', 'aab'],
-        ['aa', 'ba'],
-        ['aa', 'baa'],
-        ['aa', '?aa'],
-        ['aa', 'aa?'],
-        ['aa', 'a?a'],
-        ['aa', 'a?b'],
-        ['aa', 'b?a'],
-        ['aa', 'a??'],
-        ['aa', '??a'],
-        ['aa', '??b'],
-        ['aa', 'b??'],
-        ['aa', 'a*'],
-        ['aa', '*a'],
-        ['aa', 'b*'],
-        ['aa', '*b'],
-        ['aa', 'ab*'],
-        ['aa', 'b*a'],
-        ['aa', 'b*b'],
-        ['aa', '*a*'],
-        ['aa', '*b*'],
-        ['aa', '??'],
-        ['aa', '*?'],
-        ['aa', '?*'],
-        ['aa', '**'],
-        ['aa', '*??'],
-        ['aa', '??*'],
-        ['aa', '?*?'],
-        ['aa', '?*??'],
-        ['aa', '*?*?*'],
-        ['ab', ''],
-        ['ab', 'b'],
-        ['ab', '?'],
-        ['ab', 'aa'],
-        ['ab', 'aaa'],
-        ['ab', 'ab'],
-        ['ab', 'aab'],
-        ['ab', 'ba'],
-        ['ab', 'baa'],
-        ['ab', '?aa'],
-        ['ab', 'aa?'],
-        ['ab', 'a?a'],
-        ['ab', 'a?b'],
-        ['ab', 'b?a'],
-        ['ab', 'a??'],
-        ['ab', '??a'],
-        ['ab', '??b'],
-        ['ab', 'b??'],
-        ['ab', 'a*'],
-        ['ab', '*a'],
-        ['ab', 'b*'],
-        ['ab', '*b'],
-        ['ab', 'ab*'],
-        ['ab', 'b*a'],
-        ['ab', 'b*b'],
-        ['ab', '*a*'],
-        ['ab', '*b*'],
-        ['ab', '??'],
-        ['ab', '*?'],
-        ['ab', '?*'],
-        ['ab', '**'],
-        ['ab', '*??'],
-        ['ab', '??*'],
-        ['ab', '?*?'],
-        ['ab', '?*??'],
-        ['ab', '*?*?*'],
-        ['xabcabcz', 'x*abcz'],
-        ['xabcabcz', 'x*a?cz'],
-        ['xabcxaabbcz', 'x*abcz'],
-        ['xabcabcz', 'x*abcz'],
-        ['xabcabcz', 'x*?bcz'],
-        ['xabcabcz', 'x*ab?z'],
-        ['xabcabcz', 'x*abc?'],
-        ['xabcabca', 'x*ab?a'],
-        ['xababba', 'x*abba'],
-        ['xabcabcz', 'x*ab*z'],
-        ['abababababababab', '*abab'],
-        ['ababababababababa', '*abab'],
-        ['babababababababab', '*abab'],
-        ['ababababababababab', '*abab'],
-        ['abababababababababa', '*abab'],
-        ['bababababababababab', '*abab'],
-        ['abababacdcdcdcdcefefefe', '*ab*cd*ce*'],
-        ['abcdefg', 'abcd*?g'],
-        ['xabcabcdabcdeabcdfabcdefg', 'x*a?????g*?'],
-        ['abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz', '*a*b*c*?*?*?*?*?g*?'],
-        ['abcabcd', '?b?'],
-        ['abcabcd', '??b??'],
-        ['abcabcd', '?b??b?'],
-        ['abcabcd', '*b?c?'],
-        ['abcabcd', '*?b?c'],
-        ['abcabcd', 'ac?*?bc'],
-        ['adceb', '?*'],
-        ['acdcb', 'a*c?b'],
-        ['acdcb', 'a*c?*b'],
-        ['abcdefgabcdz', 'a*abcdz'],
-        ['xabcdabcd', 'x*abcd']
+        ['horse', 'ros'],
+        ['intention', 'execution']
     ];
 })(window, jQuery);

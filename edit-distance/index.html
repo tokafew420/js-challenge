@@ -7,7 +7,7 @@
     <meta name="description" content="js-challenge me repo. Test you skills.">
     <meta name="author" content="tokafew420">
 
-    <title>JS challenge - Wildcard Matching</title>
+    <title>JS challenge - Edit Distance</title>
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
         crossorigin="anonymous">
@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="mt-5">
-                            <a href="https://leetcode.com/problems/wildcard-matching/description/">Wildcard Matching</a>
+                            <a href="https://leetcode.com/problems/edit-distance/description/">Edit Distance</a>
                         </h1>
                         <div>
                             <p>From
@@ -76,31 +76,17 @@
                         <h4 class="label" data-toggle="collapse" href="#description" role="button" aria-expanded="false" aria-controls="description">Description</h4>
                         <div class="collapse" id="description">
                             <div class="card card-body">
-                                <p>Given an input string (
-                                    <code>s</code>) and a pattern (
-                                    <code>p</code>), implement wildcard pattern matching with support for
-                                    <code>'?'</code> and
-                                    <code>'*'</code>.</p>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>'?' Matches any single character.
-'*' Matches any sequence of characters (including the empty sequence).</pre>
-                                </div>
-                                <p>The matching should cover the
-                                    <strong>entire</strong> input string (not partial).</p>
-                                <p>
-                                    <strong>Note:</strong>
-                                    <ul>
-                                        <li>
-                                            <code>s</code> could be empty and contains only lowercase letters
-                                            <code>a-z.</code>
-                                        </li>
-                                        <li>
-                                            <code>p</code> could be empty and contains only lowercase letters
-                                            <code>a-z</code>, and characters like
-                                            <code>?</code> or
-                                            <code>*</code>.</li>
-                                    </ul>
-                                </p>
+                                <p>Given two words
+                                    <code>word1</code> and
+                                    <code>word2</code>, find the minimum number of operations required to convert
+                                    <code>word1</code> to
+                                    <code>word2</code>.</p>
+                                <p>You have the following 3 operations permitted on a word:</p>
+                                <ol>
+                                    <li>Insert a character</li>
+                                    <li>Delete a character</li>
+                                    <li>Replace a character</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
@@ -119,45 +105,27 @@
                                 <div class="alert alert-secondary" role="alert">
                                     <pre>
 <strong>Input:</strong>
-s = "aa"
-p = "a"
-<strong>Output:</strong> false
-<strong>Explanation:</strong> "a" does not match the entire string "aa".</pre>
+word1 = "horse"
+word2 = "ros"
+<strong>Output:</strong> 3
+<strong>Explanation:</strong>
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')</pre>
                                 </div>
                                 <strong>Example 2:</strong>
                                 <div class="alert alert-secondary" role="alert">
                                     <pre>
 <strong>Input:</strong>
-s = "aa"
-p = "*"
-<strong>Output:</strong> true
-<strong>Explanation:</strong> '*' matches any sequence.</pre>
-                                </div>
-                                <strong>Example 3:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "cb"
-p = "?a"
-<strong>Output:</strong> false
-<strong>Explanation:</strong> '?' matches 'c', but the second letter is 'a', which does not match 'b'.</pre>
-                                </div>
-                                <strong>Example 4:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "adceb"
-p = "*a*b"
-<strong>Output:</strong> true
-<strong>Explanation:</strong> The first '*' matches the empty sequence, while the second '*' matches the substring "dce".</pre>
-                                </div>
-                                <strong>Example 5:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "acdcb"
-p = "a*c?b"
-<strong>Output:</strong> false</pre>
+word1 = "intention"
+word2 = "execution"
+<strong>Output:</strong> 5
+<strong>Explanation:</strong>
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')</pre>
                                 </div>
                             </div>
                         </div>
@@ -187,37 +155,37 @@ p = "a*c?b"
                     <div class="col-lg-6">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="first-input">String</span>
+                                <span class="input-group-text" id="first-input">Word 1</span>
                             </div>
-                            <input type="text" id="input-1" class="form-control" aria-label="String" aria-describedby="first-input"
-                                value="acdcb">
+                            <input type="text" id="input-1" class="form-control" aria-label="First Input" aria-describedby="first-input" value="horse"
+                                readonly>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="second-input">Pattern</span>
+                                <span class="input-group-text" id="second-input">Word 2</span>
                             </div>
-                            <input type="text" id="input-2" class="form-control" aria-label="Pattern" aria-describedby="second-input"
-                                value="a*c?b">
+                            <input type="text" id="input-2" class="form-control" aria-label="Second Input" aria-describedby="second-input" value="ros"
+                                readonly>
                         </div>
                     </div>
                     <div class="col-lg-6 actions">
-                        <button type="button" id="run-once" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
-                            data-placement="bottom" data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
+                        <button type="button" id="run-once" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions"
+                            data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
                         <button type="button" id="test" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
-                            data-placement="bottom" data-trigger="hover" data-content="Run and compare your code">Test Solution</button>
+                            data-placement="bottom" data-trigger="hover" data-content="Run and compare your code" disabled>Test Solution</button>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" class="hidden">
                         <div class="btn-group btn-group-toggle float-lg-right mb-3" data-toggle="buttons">
                             <div class="input-group-text" id="btnGroupAddon">
                                 <strong>Compare Against: </strong>
                             </div>
                             <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="compare-opt-base" autocomplete="off" checked>Base (Regex)
+                                <input type="radio" name="options" id="compare-opt-base" autocomplete="off" checked>Base
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="compare-opt-top" autocomplete="off">My solution
+                                <input type="radio" name="options" id="compare-opt-top" autocomplete="off" disabled>My solution
                             </label>
                         </div>
                     </div>
@@ -237,8 +205,8 @@ p = "a*c?b"
                     </div>
                 </div>
             </div>
-            <pre id="output-template" style="display: none;">
-<strong>Input:</strong> s = "<span id="trial-input-1"></span>" p = "<span id="trial-input-2"></span>"
+            <pre id="output-template" class="hidden">
+<strong>Input:</strong> word1 = "<span id="trial-input-1"></span>" word2 = "<span id="trial-input-2"></span>"
 <strong>Expected: </strong><span id="trial-expected"></span> <strong>Output: </strong><span id="trial-actual" ></span>
 <strong>Base Time => Max: </strong><span id="base-time-max" ></span> Avg: </strong><span id="base-time-avg" ></span> Min: </strong><span id="base-time-min" ></span>
 <strong>Your Time => Max: </strong><span id="your-time-max" ></span> Avg: </strong><span id="your-time-avg" ></span> Min: </strong><span id="your-time-min" ></span>
@@ -285,7 +253,7 @@ p = "a*c?b"
     <script src="../js/base.js"></script>
     <script src="../js/challenge.js"></script>
     <script src="./index.js"></script>
-    <script src="https://rawgit.com/tokafew420/js-challenge/master/widlcard-matching/solution.js"></script>
+    <script src="https://rawgit.com/tokafew420/js-challenge/master/edit-distance/solution.js"></script>
 </body>
 
 </html>

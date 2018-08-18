@@ -8,7 +8,7 @@
     }
 
     function reset(e) {
-        e.preventDefault();
+        if(e) e.preventDefault();
 
         app.editor.setValue(
             `/**

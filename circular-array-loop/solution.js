@@ -1,4 +1,4 @@
-var circularArrayLoop = function (nums) {
+function solution(nums) {
     var len = nums.length;
     var i = 0;
     var dir; // Direction: 0 = forward; 1 = backward;

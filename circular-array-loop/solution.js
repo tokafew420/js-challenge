@@ -28,7 +28,7 @@ var circularArrayLoop = function (nums) {
             // Mark as visited
             nums[curIdx] = marker;
 
-            // Get next element
+            // Get next element index
             nextIdx = mod(cur + curIdx, len);
 
             if (nextIdx === curIdx) break; // Found self loop.

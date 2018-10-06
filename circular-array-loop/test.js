@@ -1,7 +1,7 @@
 var utils = require('../utils.js');
 
 var context = utils.loadSolution();
-var solution = context.circularArrayLoop;
+var solution = context.solution;
 
 var correctCt = 0;
 var wrongCt = 0;

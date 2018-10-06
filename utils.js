@@ -4,6 +4,32 @@ var process = require('process');
 var vm = require("vm");
 
 var utils = module.exports = {
+    
+    /**
+     * Get an array on random numbers
+     * 
+     * @param {number} size The size of the resulting array. Default 10.
+     * @param {number|function} min The mininum inclusive range of the random number. Or a function used to fill the array
+     * @param {number} max The maximum inclusive range of the random number. Ignored if min is a function.
+     * @returns {Array} An array filled with random numbers.
+     */
+    getArray: function(size, min, max) {
+        var fn;
+        size = size || 10;
+        if(typeof min === 'function') {
+            fn = min;
+        } else {
+            min = min || -10;
+            max = max || 10;
+            var range = max - min;
+            fn = function() {
+                return Math.round(Math.random() * range + min);
+            };
+        }
+
+        return Array.apply(null, Array(size)).map(fn);
+    },
+
     /**
      * Get the stats from an array of run times.
      * @param {Array(number)} runtimes An array containing the run times.
@@ -39,11 +65,15 @@ var utils = module.exports = {
      * @param {string} filepath The path to the solution file
      * @returns {object}
      */
-    loadSolution: function (filepath) {
+    loadSolution: function (filepath, debug) {
         // Assuming test.js and solution.js are in the same dir
         solutionPath = filepath || path.join(process.mainModule.filename, '../solution.js');
         var context = {};
         var data = fs.readFileSync(solutionPath);
+
+        if(debug) {
+            context.console = console;
+        }
 
         // Include the solution from solution.js
         vm.runInNewContext(data, context, solutionPath);
@@ -60,7 +90,7 @@ var utils = module.exports = {
      */
     printStats: function (stats, name) {
         name = name || '';
-        console.log('%s => Runs: %s; Max: %sns; Min: %sns; Avg: %sns;', stats.runs, stats.max, stats.min, stats.avg);
+        console.log('%s => Runs: %s; Max: %sns; Min: %sns; Avg: %sns;', name, stats.runs, stats.max, stats.min, stats.avg);
 
         return utils;
     },

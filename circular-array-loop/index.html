@@ -7,10 +7,10 @@
     <meta name="description" content="js-challenge me repo. Test you skills.">
     <meta name="author" content="tokafew420">
 
-    <title>JS challenge - Wildcard Matching</title>
+    <title>JS challenge - Circular Array Loop</title>
 
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
-        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/theme/neat.css">
@@ -25,8 +25,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="../index.html">JS Challenge</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -57,7 +57,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="mt-5">
-                            <a href="https://leetcode.com/problems/wildcard-matching/description/">Wildcard Matching</a>
+                            <a href="https://leetcode.com/problems/circular-array-loop/description/">Circular Array
+                                Loop</a>
                         </h1>
                         <div>
                             <p>From
@@ -73,34 +74,21 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h4 class="label" data-toggle="collapse" href="#description" role="button" aria-expanded="false" aria-controls="description">Description</h4>
+                        <h4 class="label" data-toggle="collapse" href="#description" role="button" aria-expanded="false"
+                            aria-controls="description">Description</h4>
                         <div class="collapse" id="description">
                             <div class="card card-body">
-                                <p>Given an input string (
-                                    <code>s</code>) and a pattern (
-                                    <code>p</code>), implement wildcard pattern matching with support for
-                                    <code>'?'</code> and
-                                    <code>'*'</code>.</p>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>'?' Matches any single character.
-'*' Matches any sequence of characters (including the empty sequence).</pre>
-                                </div>
-                                <p>The matching should cover the
-                                    <strong>entire</strong> input string (not partial).</p>
-                                <p>
-                                    <strong>Note:</strong>
-                                    <ul>
-                                        <li>
-                                            <code>s</code> could be empty and contains only lowercase letters
-                                            <code>a-z.</code>
-                                        </li>
-                                        <li>
-                                            <code>p</code> could be empty and contains only lowercase letters
-                                            <code>a-z</code>, and characters like
-                                            <code>?</code> or
-                                            <code>*</code>.</li>
-                                    </ul>
-                                </p>
+                                <p>You are given an array of positive and negative integers. If a number <code>n</code>
+                                    at an index is positive, then move forward <code>n</code> steps.
+                                    Conversely, if it's negative (<code>-n</code>), move backward <code>n</code> steps.
+                                    Assume the first element of the array is forward next to the last element,
+                                    and the last element is backward next to the first element. Determine if there is a
+                                    loop in this array. A loop starts and ends at a particular index with
+                                    more than 1 element along the loop. The loop must be "forward" or "backward'.</p>
+
+                                <p><strong>Note:</strong> The given array is guaranteed to contain no element "0".</p>
+
+                                <p>Can you do it in O(n) time complexity and O(1) space complexity?</p>
                             </div>
                         </div>
                     </div>
@@ -112,52 +100,23 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h4 class="label" data-toggle="collapse" href="#examples" role="button" aria-expanded="false" aria-controls="sample">Examples</h4>
+                        <h4 class="label" data-toggle="collapse" href="#examples" role="button" aria-expanded="false"
+                            aria-controls="sample">Examples</h4>
                         <div class="collapse" id="examples">
                             <div class="card card-body">
                                 <strong>Example 1:</strong>
                                 <div class="alert alert-secondary" role="alert">
                                     <pre>
-<strong>Input:</strong>
-s = "aa"
-p = "a"
-<strong>Output:</strong> false
-<strong>Explanation:</strong> "a" does not match the entire string "aa".</pre>
+<strong>Input:</strong> [2, -1, 1, 2, 2]
+<strong>Output:</strong> true
+<strong>Explanation:</strong> Given the array [2, -1, 1, 2, 2], there is a loop, from index 0 -> 2 -> 3 -> 0.</pre>
                                 </div>
                                 <strong>Example 2:</strong>
                                 <div class="alert alert-secondary" role="alert">
                                     <pre>
-<strong>Input:</strong>
-s = "aa"
-p = "*"
-<strong>Output:</strong> true
-<strong>Explanation:</strong> '*' matches any sequence.</pre>
-                                </div>
-                                <strong>Example 3:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "cb"
-p = "?a"
+<strong>Input:</strong> [-1, 2]
 <strong>Output:</strong> false
-<strong>Explanation:</strong> '?' matches 'c', but the second letter is 'a', which does not match 'b'.</pre>
-                                </div>
-                                <strong>Example 4:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "adceb"
-p = "*a*b"
-<strong>Output:</strong> true
-<strong>Explanation:</strong> The first '*' matches the empty sequence, while the second '*' matches the substring "dce".</pre>
-                                </div>
-                                <strong>Example 5:</strong>
-                                <div class="alert alert-secondary" role="alert">
-                                    <pre>
-<strong>Input:</strong>
-s = "acdcb"
-p = "a*c?b"
-<strong>Output:</strong> false</pre>
+<strong>Explanation:</strong> Given the array [-1, 2], there is no loop.</pre>
                                 </div>
                             </div>
                         </div>
@@ -187,37 +146,66 @@ p = "a*c?b"
                     <div class="col-lg-6">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="first-input">String</span>
+                                <span class="input-group-text" id="first-input">Array</span>
                             </div>
-                            <input type="text" id="input-1" class="form-control" aria-label="String" aria-describedby="first-input"
-                                value="acdcb">
+                            <input type="text" id="input-1" class="form-control" aria-label="Array Input"
+                                aria-describedby="first-input" value="[2, -1, 1, 2, 2]">
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="second-input">Pattern</span>
+                    <div class="col-lg-6 setup">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="input-size-label">Size</span>
+                                    </div>
+                                    <input type="number" id="input-size" class="form-control" aria-label="Size"
+                                        aria-describedby="input-size-label" value="10" min="1">
+                                    <div class="invalid-tooltip">
+                                        The array size must be 1 or greater.
+                                    </div>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="input-min-label">Min</span>
+                                    </div>
+                                    <input type="number" id="input-min" class="form-control" aria-label="Min"
+                                        aria-describedby="input-min-label" value="-10">
+                                    <div class="invalid-tooltip">
+                                        Min must be less than or equal to Max.
+                                    </div>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="input-max-label">Max</span>
+                                    </div>
+                                    <input type="number" id="input-max" class="form-control" aria-label="Max"
+                                        aria-describedby="input-max-label" value="10">
+                                    <div class="invalid-tooltip">
+                                        Max must be greater than or equal to Min.
+                                    </div>
+                                </div>
                             </div>
-                            <input type="text" id="input-2" class="form-control" aria-label="Pattern" aria-describedby="second-input"
-                                value="a*c?b">
+                            <div class="col-sm-4 ">
+                                <button type="button" id="create-data" class="btn btn-sm btn-outline-dark mb-3" role="button"
+                                    data-container="#test-section .setup" data-toggle="popover" data-placement="bottom"
+                                    data-trigger="hover" data-html="true" data-content="Create an array of random numbers.">Generate</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 actions">
-                        <button type="button" id="run-once" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
-                            data-placement="bottom" data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run Once</button>
-                        <button type="button" id="test" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions" data-toggle="popover"
-                            data-placement="bottom" data-trigger="hover" data-content="Run and compare your code">Test Solution</button>
+                        <button type="button" id="run-once" class="btn btn-outline-dark mb-3" role="button"
+                            data-container="#test-section .actions" data-toggle="popover" data-placement="bottom"
+                            data-trigger="hover" data-html="true" data-content="Run your code with the &lt;strong&gt;string&lt;/strong&gt; and &lt;strong&gt;pattern&lt;/strong&gt; inputs.">Run
+                            Once</button>
+                        <button type="button" id="test" class="btn btn-outline-dark mb-3" role="button" data-container="#test-section .actions"
+                            data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Run and compare your code">Test
+                            Solution</button>
                     </div>
                     <div class="col-lg-6">
                         <div class="btn-group btn-group-toggle float-lg-right mb-3" data-toggle="buttons">
                             <div class="input-group-text" id="btnGroupAddon">
                                 <strong>Compare Against: </strong>
                             </div>
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="compare-opt-base" autocomplete="off" checked>Base (Regex)
-                            </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="compare-opt-top" autocomplete="off">My solution
+                                <input type="radio" name="options" id="compare-opt-top" autocomplete="off" checked>My
+                                solution
                             </label>
                         </div>
                     </div>
@@ -238,7 +226,7 @@ p = "a*c?b"
                 </div>
             </div>
             <pre id="output-template" style="display: none;">
-<strong>Input:</strong> s = "<span id="trial-input-1"></span>" p = "<span id="trial-input-2"></span>"
+<strong>Input:</strong> <span id="trial-input-1"></span>
 <strong>Expected: </strong><span id="trial-expected"></span> <strong>Output: </strong><span id="trial-actual" ></span>
 <strong>Base Time => Max: </strong><span id="base-time-max" ></span> Avg: </strong><span id="base-time-avg" ></span> Min: </strong><span id="base-time-min" ></span>
 <strong>Your Time => Max: </strong><span id="your-time-max" ></span> Avg: </strong><span id="your-time-avg" ></span> Min: </strong><span id="your-time-min" ></span>
@@ -270,7 +258,8 @@ p = "a*c?b"
 
     <div class="progress-wrapper">
         <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">25%</div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -280,7 +269,8 @@ p = "a*c?b"
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/javascript/javascript.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/javascript/javascript.min.js"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/challenge.js"></script>

@@ -1,7 +1,40 @@
-(function (window, $) {
+(function (app, window, $) {
     "use strict";
 
-    var app = window.app = window.app || {};
+    /**
+     * Get an array on random numbers
+     * 
+     * @param {number} size The size of the resulting array. Default 10.
+     * @param {number|function} min The mininum inclusive range of the random number. Or a function used to fill the array
+     * @param {number} max The maximum inclusive range of the random number. Ignored if min is a function.
+     * @returns {Array} An array filled with random numbers.
+     */
+    app.getArray = function (size, min, max) {
+        var fn;
+        size = size || 10;
+        if (typeof min === 'function') {
+            fn = min;
+        } else {
+            min = min || -10;
+            max = max || 10;
+            var range = max - min;
+            fn = function () {
+                return Math.round(Math.random() * range + min);
+            };
+        }
+
+        return Array.apply(null, Array(size)).map(fn);
+    };
+
+    /**
+     * Load the solution from github.
+     * @param {string} url The github url to the raw solution file.
+     */
+    app.loadSolution = function (url) {
+        $.get(url, function (res) {
+            app.solution = res || '';
+        });
+    };
 
     // Taken from MDN https://developer.mozilla.org/en-US/docs/DOM/window.btoa
     // utf8 to Base64 encoder.
@@ -111,7 +144,7 @@
             $frame.appendTo('body');
 
             $frame.invoke = app.debounce(function (data, iterations, timeout, callback) {
-                if(typeof iterations === 'function') {
+                if (typeof iterations === 'function') {
                     callback = iterations;
                     iterations = 1;
                     timeout = null;
@@ -122,7 +155,7 @@
                 if (typeof iterations !== 'number') {
                     iterations = 1;
                 }
-                _callback = callback || function() {};
+                _callback = callback || function () {};
 
                 setTimeout(function () {
                     $frame[0].contentWindow.postMessage(data, '*');
@@ -176,4 +209,4 @@
         },
         theme: 'neat'
     });
-})(window, jQuery);
+})(window.app = window.app || {}, window, jQuery);

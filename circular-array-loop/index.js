@@ -1,28 +1,25 @@
 (function (app, window, $) {
     "use strict";
 
-    app.loadSolution('https://raw.githubusercontent.com/tokafew420/js-challenge/master/wildcard-matching/solution.js');
+    app.loadSolution('https://raw.githubusercontent.com/tokafew420/js-challenge/master/circular-array-loop/solution.js');
 
-    if (localStorage.getItem('js-challenge-wildcard-matching')) {
-        app.editor.setValue(localStorage.getItem('js-challenge-wildcard-matching'));
+    if (localStorage.getItem('js-challenge-circular-array-loop')) {
+        app.editor.setValue(localStorage.getItem('js-challenge-circular-array-loop'));
     } else {
         reset();
     }
 
     function reset(e) {
-        if(e) e.preventDefault();
+        if (e) e.preventDefault();
 
         app.editor.setValue(
             `/**
- * @param {string} s
- * @param {string} p
- * @return {boolean}
- */
-function isMatch(s, p) {
-    var i = new RegExp('^' + p.replace(/\\?/g, '.').replace(/\\*/g, '.*') + '$');
-    return i.test(s);
-};`
-        );
+* @param {number[]} nums
+* @return {boolean}
+*/
+function circularArrayLoop(nums) {
+}
+`);
     }
 
     $('#reset').click(reset);
@@ -31,18 +28,69 @@ function isMatch(s, p) {
         var code = app.editor.getValue();
 
         if (code) {
-            localStorage.setItem('js-challenge-wildcard-matching', code);
-            app.compile('isMatch', code);
+            localStorage.setItem('js-challenge-circular-array-loop', code);
+            app.compile('circularArrayLoop', code);
         }
     });
 
-    function baseSolution(s, p) {
-        var i = new RegExp("^" + p.replace(/\?/g, '.').replace(/\*/g, '.*') + "$");
-        return i.test(s);
-    }
+    $('#input-size').on('change', function () {
+        var $this = $(this);
+        var size = +$this.val();
+
+        if (isNaN(size) || size < 1) $this.addClass('is-invalid');
+        else $this.removeClass('is-invalid');
+    });
+
+    $('#input-min').on('change', function () {
+        var $this = $(this);
+        var $max = $('#input-max');
+        var min = +$this.val();
+        var max = $max.val();
+
+        if (isNaN(min) || (!isNaN(max) && min > max)) {
+            $this.addClass('is-invalid');
+            $max.removeClass('is-invalid');
+        } else {
+            $this.removeClass('is-invalid');
+            $max.removeClass('is-invalid');
+        }
+    });
+
+    $('#input-max').on('change', function () {
+        var $this = $(this);
+        var $min = $('#input-min');
+        var max = +$this.val();
+        var min = $min.val();
+
+        if (isNaN(max) || (!isNaN(min) && max < min)) {
+            $this.addClass('is-invalid');
+            $min.removeClass('is-invalid');
+        } else {
+            $this.removeClass('is-invalid');
+            $min.removeClass('is-invalid');
+        }
+    });
+
+    $('#create-data').on('click', function () {
+        var size = +($('#input-size').val());
+        var min = +($('#input-min').val());
+        var max = +($('#input-max').val());
+
+        if (isNaN(size) || size < 1) return;
+        if (isNaN(min) || isNaN(max) || min > max) return;
+
+        var range = max - min;
+        var array = app.getArray(size, function () {
+            var x;
+            while (!(x = Math.round(Math.random() * range + min)));
+
+            return x;
+        });
+
+        $('#input-1').val('[' + array + ']');
+    });
 
     var $input1 = $('#input-1');
-    var $input2 = $('#input-2');
     var $output = $('#output');
     var $summary = $('#summary');
     var $outputTemplate = $('#output-template');
@@ -50,19 +98,17 @@ function isMatch(s, p) {
     var runs, ran;
     var summary;
 
-    function runTest(input1, input2, callback) {
+    function runTest(input1, callback) {
         var input = {
-            s: input1,
-            p: input2,
+            nums: input1,
             iterations: 100
         };
         summary.testCases++;
 
-        var isCompareToBase = $('#compare-opt-base').is(':checked');
-        var baseFnName = isCompareToBase ? 'baseSolution' : 'isMatch';
-        var baseFn = isCompareToBase ? baseSolution : app.solution;
+        var baseFnName = 'solution';
+        var baseFn = app.solution;
 
-        app.compile(baseFnName, baseFn.toString()).invoke(input, function (err, baseRes) {
+        app.compile(baseFnName, app.solution).invoke(input, function (err, baseRes) {
             app.progress.update(++ran / runs);
             if (err) {
                 return callback(err);
@@ -70,7 +116,7 @@ function isMatch(s, p) {
 
             summary.baseRuntimes.push(baseRes.stats.avg);
 
-            var code = app.compile('isMatch', app.editor.getValue());
+            var code = app.compile('circularArrayLoop', app.editor.getValue());
 
             if (code) {
                 code.invoke(input, function (err, res) {
@@ -84,7 +130,6 @@ function isMatch(s, p) {
                     var $clone = $outputTemplate.clone();
 
                     var $trialInput1 = $('#trial-input-1', $clone);
-                    var $trialInput2 = $('#trial-input-2', $clone);
                     var $trialExpected = $('#trial-expected', $clone);
                     var $trialActual = $('#trial-actual', $clone);
                     var $baseTimeMax = $('#base-time-max', $clone);
@@ -95,8 +140,7 @@ function isMatch(s, p) {
                     var $yourTimeMin = $('#your-time-min', $clone);
                     var $comparison = $('#comparison', $clone);
 
-                    $trialInput1.text(input.s);
-                    $trialInput2.text(input.p);
+                    $trialInput1.text('[' + input.nums + ']');
 
                     $trialExpected.text(baseRes.answer);
                     $trialActual.text(res.answer);
@@ -159,7 +203,12 @@ function isMatch(s, p) {
             runtimes: [],
             baseRuntimes: []
         };
-        runTest($input1.val(), $input2.val(), function (err) {
+
+        var nums = $input1.val().split(',').map(function (num) {
+            return +(num.replace('[', '').replace(']', ''));
+        });
+
+        runTest(nums, function (err) {
             if (err) {
                 console.log(err);
             }
@@ -185,7 +234,7 @@ function isMatch(s, p) {
         function test() {
             if (ran < runs) {
                 var i = ran / 2;
-                runTest(testCases[i][0], testCases[i][1], test);
+                runTest(testCases[i], test);
             } else {
                 var $clone = $summaryTemplate.clone();
 
@@ -251,137 +300,90 @@ function isMatch(s, p) {
     });
 
     var testCases = [
-        ['aa', 'a'],
-        ['aa', '*'],
-        ['cb', '?a'],
-        ['adceb', '*a*b'],
-        ['acdcb', 'a*c?b'],
-        ['', ''],
-        ['', 'a'],
-        ['', '?'],
-        ['', '*'],
-        ['a', ''],
-        ['a', 'a'],
-        ['a', 'b'],
-        ['a', '?'],
-        ['a', '*'],
-        ['a', 'aa'],
-        ['a', 'ab'],
-        ['a', 'ba'],
-        ['a', 'a?'],
-        ['a', '?a'],
-        ['a', '?b'],
-        ['a', 'b?'],
-        ['a', 'a*'],
-        ['a', '*a'],
-        ['a', 'b*'],
-        ['a', '*b'],
-        ['a', '??'],
-        ['a', '*?'],
-        ['a', '?*'],
-        ['a', '**'],
-        ['aa', ''],
-        ['aa', 'b'],
-        ['aa', '?'],
-        ['aa', 'aa'],
-        ['aa', 'aaa'],
-        ['aa', 'ab'],
-        ['aa', 'aab'],
-        ['aa', 'ba'],
-        ['aa', 'baa'],
-        ['aa', '?aa'],
-        ['aa', 'aa?'],
-        ['aa', 'a?a'],
-        ['aa', 'a?b'],
-        ['aa', 'b?a'],
-        ['aa', 'a??'],
-        ['aa', '??a'],
-        ['aa', '??b'],
-        ['aa', 'b??'],
-        ['aa', 'a*'],
-        ['aa', '*a'],
-        ['aa', 'b*'],
-        ['aa', '*b'],
-        ['aa', 'ab*'],
-        ['aa', 'b*a'],
-        ['aa', 'b*b'],
-        ['aa', '*a*'],
-        ['aa', '*b*'],
-        ['aa', '??'],
-        ['aa', '*?'],
-        ['aa', '?*'],
-        ['aa', '**'],
-        ['aa', '*??'],
-        ['aa', '??*'],
-        ['aa', '?*?'],
-        ['aa', '?*??'],
-        ['aa', '*?*?*'],
-        ['ab', ''],
-        ['ab', 'b'],
-        ['ab', '?'],
-        ['ab', 'aa'],
-        ['ab', 'aaa'],
-        ['ab', 'ab'],
-        ['ab', 'aab'],
-        ['ab', 'ba'],
-        ['ab', 'baa'],
-        ['ab', '?aa'],
-        ['ab', 'aa?'],
-        ['ab', 'a?a'],
-        ['ab', 'a?b'],
-        ['ab', 'b?a'],
-        ['ab', 'a??'],
-        ['ab', '??a'],
-        ['ab', '??b'],
-        ['ab', 'b??'],
-        ['ab', 'a*'],
-        ['ab', '*a'],
-        ['ab', 'b*'],
-        ['ab', '*b'],
-        ['ab', 'ab*'],
-        ['ab', 'b*a'],
-        ['ab', 'b*b'],
-        ['ab', '*a*'],
-        ['ab', '*b*'],
-        ['ab', '??'],
-        ['ab', '*?'],
-        ['ab', '?*'],
-        ['ab', '**'],
-        ['ab', '*??'],
-        ['ab', '??*'],
-        ['ab', '?*?'],
-        ['ab', '?*??'],
-        ['ab', '*?*?*'],
-        ['xabcabcz', 'x*abcz'],
-        ['xabcabcz', 'x*a?cz'],
-        ['xabcxaabbcz', 'x*abcz'],
-        ['xabcabcz', 'x*abcz'],
-        ['xabcabcz', 'x*?bcz'],
-        ['xabcabcz', 'x*ab?z'],
-        ['xabcabcz', 'x*abc?'],
-        ['xabcabca', 'x*ab?a'],
-        ['xababba', 'x*abba'],
-        ['xabcabcz', 'x*ab*z'],
-        ['abababababababab', '*abab'],
-        ['ababababababababa', '*abab'],
-        ['babababababababab', '*abab'],
-        ['ababababababababab', '*abab'],
-        ['abababababababababa', '*abab'],
-        ['bababababababababab', '*abab'],
-        ['abababacdcdcdcdcefefefe', '*ab*cd*ce*'],
-        ['abcdefg', 'abcd*?g'],
-        ['xabcabcdabcdeabcdfabcdefg', 'x*a?????g*?'],
-        ['abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz', '*a*b*c*?*?*?*?*?g*?'],
-        ['abcabcd', '?b?'],
-        ['abcabcd', '??b??'],
-        ['abcabcd', '?b??b?'],
-        ['abcabcd', '*b?c?'],
-        ['abcabcd', '*?b?c'],
-        ['abcabcd', 'ac?*?bc'],
-        ['adceb', '?*'],
-        ['acdcb', 'a*c?b'],
-        ['acdcb', 'a*c?*b'],
-        ['abcdefgabcdz', 'a*abcdz'],
-        ['xabcdabcd', 'x*abcd']
+        /**********
+         * Test scenarios from problem examples
+         ***********/
+        [2, -1, 1, 2, 2],
+        [-1, 2],
+
+        /**********
+         * Test other different scenarios
+         ***********/
+        [-9],
+        [10, 9],
+        [9, 9],
+        [10, -2, 7],
+        [8, -6, 1, 9],
+        [8, -5, -1, -5, -6],
+        [7, 2, -7, 2, 2, 2],
+        [-5, -2, -7, 9, -4, -8, 6],
+        [-1, 4, 6, 3, 8, 3, 7, 6],
+        [-5, 5, 5, 2, -4, 8, -4, 3, 9],
+        [7, -1, -9, 10, -7, -9, -2, 5, 4, -4],
+        [7, 1, 1, 1, 5, 9, 4, 8, -10, 4, 7],
+        [4, -4, 7, 5, 1, -9, 10, -4, -7, -8, 5, -7],
+        [-6, -9, -3, -6, -6, -2, 8, -2, 4, 9, -7, 8, 2],
+        [9, 5, -6, 7, 3, -7, 7, -5, -10, -3, 8, 1, 3, -6],
+        [-5, 6, 9, 9, -9, 8, 2, -3, 7, 6, 10, -2, -5, 9, 1],
+        [-7, -2, 5, 7, 9, 6, -6, -2, -10, 2, 1, -1, 8, 6, 8, 3],
+        [-5, 8, -10, -8, -3, -9, 5, -1, -10, 1, -7, -7, 8, 1, 1, 6, 1],
+        [-2, -8, -8, 9, -7, 1, -4, 2, -2, 9, 8, -2, -1, 10, -9, -2, 9, -6],
+        [-8, -6, -5, 2, -7, -2, -4, -9, -3, 6, 2, -4, 4, -4, 2, -8, -1, 10, -4],
+        [-4, -3, -4, 1, 3, 10, 7, 10, -7, -5],
+        [10],
+        [-1, -6],
+        [-5, -6, 2],
+        [-7, -5, -1, -3],
+        [-5, -7, 7, -9, -6],
+        [6, 2, 3, -7, -4, 1],
+        [-1, -10, -8, 3, -10, -8, 8],
+        [-3, 3, -3, -4, -7, -8, -1, 9],
+        [-1, -4, -6, -1, -2, 6, 7, -8, 8],
+        [4, 9, 5, -9, 8, -7, -1, 5, 5, 8],
+        [-9, 4, 9, -5, 5, -4, -8, -1, -9, -9, 3],
+        [8, -6, -9, -5, -1, -8, 5, 2, -5, -6, -2, -1],
+        [10, -3, -3, 8, -10, 4, 9, 9, 3, 2, 3, -5, -9],
+        [-9, -7, 5, 5, 4, -9, -3, 10, -7, 1, 9, -4, 10, 9],
+        [-9, 2, -3, 4, -9, 6, 3, -4, 6, 3, 6, -7, 6, 10, -4],
+        [5, -3, -6, 9, -1, 6, -6, 8, 3, 5, -6, 7, -8, -3, -10, -7],
+        [-8, -4, 1, 7, -9, -8, -6, 2, -4, -3, -8, -9, -9, 3, 8, 3, 1],
+        [-1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2],
+        [2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3],
+        [-3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3],
+        [3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6],
+        [6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4],
+        [-4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3],
+        [3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5],
+        [5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1],
+        [1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2, 9],
+        [9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6, 2],
+        [2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1, 6],
+        [6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1, 1],
+        [1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7, -1],
+        [-1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5, -7],
+        [-7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9, 5],
+        [5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5, 9],
+        [9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10, -5],
+        [-5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1, 10],
+        [10, -5, 9, 5, -7, -1, 1, 6, 2, 9, 1, 5, 3, -4, 6, 3, -3, 2, -1],
+
+        [-7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7],
+        [-7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4],
+        [-4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5],
+        [-5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4],
+        [-4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7],
+        [7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5],
+        [-5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10],
+        [10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1, -6],
+        [-6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10, 1],
+        [1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3, 10],
+        [10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6, 3],
+        [3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7, -6],
+        [-6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7, -7],
+        [-7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9, -7],
+        [-7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9, 9],
+        [9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6, 9],
+        [9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7, -6],
+        [-6, 9, 9, -7, -7, -6, 3, 10, 1, -6, 10, -5, 7, -4, -5, -4, -7, -7],
     ];
 })(window.app = window.app || {}, window, jQuery);
